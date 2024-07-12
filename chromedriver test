@@ -1,0 +1,35 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+
+# 设置ChromeDriver的路径
+chromedriver_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chromedriver.exe'  # 更新为你的ChromeDriver实际路径
+
+# 设置Selenium选项
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # 无头模式，如果你不需要无头模式，可以删除这行
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--ignore-certificate-errors")  # 忽略证书错误
+chrome_options.add_argument("--ignore-ssl-errors")  # 忽略SSL错误
+chrome_options.add_argument('--proxy-server=http://127.0.0.1:10809')  # 配置HTTP代理
+
+# 创建ChromeDriver服务
+service = Service(executable_path=chromedriver_path)
+
+# 启动浏览器
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# 访问网址
+url = 'https://www.csdn.net/'
+driver.get(url)
+driver.maximize_window()
+
+print("页面标题是:", driver.title)
+
+# 保持窗口打开，等待用户输入
+input("Press Enter to close the browser...")
+
+# 关闭浏览器
+driver.quit()
